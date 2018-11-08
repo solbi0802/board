@@ -22,14 +22,14 @@
 <tr>
     <td width=60 align=left >작성자</td>
     <td align=left >
-        <INPUT type=text name=name size=20 maxlength=10>
+        <INPUT type=text name=writer size=20 maxlength=10>
     </td>
 </tr>
 <tr></tr>
 <tr>
     <td width=70 align=left >비밀번호</td>
     <td align=left >
-        <INPUT type=password name=pass size=8 maxlength=8>
+        <INPUT type=password name=pwd size=8 maxlength=8>
     </td>
 </tr>
 <tr></tr>
