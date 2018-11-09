@@ -56,7 +56,7 @@ $row = mysqli_fetch_array($result);
               [글쓰기]</font></a>
               <a href=edit.php?id=<?=$id?>><font color=white>
               [수정]</font></a>
-              <a href=predel.php?id=<?=$id?>><font color=white>
+              <a href=delete.php?id=<?=$id?>><font color=white>
               [삭제]</font></a>
           </td>
       </tr>

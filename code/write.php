@@ -43,7 +43,7 @@
 <tr>
     <td width=60 align=left >내용</td>
     <td align=left >
-        <TEXTAREA name=content cols=65 rows=15></TEXTAREA>
+        <textarea name=content cols=65 rows=15></textarea>
     </td>
 </tr>
 <tr>
