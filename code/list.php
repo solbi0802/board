@@ -10,7 +10,7 @@ $no = $_GET[no];
 if (!$no || $no < 0)
   $no = 0;
 
-$query = "SELECT * FROM $board ORDER BY thread LIMIT $no, $page_size";
+$query = "SELECT * FROM $board ORDER BY thread DESC LIMIT $no, $page_size";
 $result = mysqli_query($conn, $query);
 
 // 총 게시물 수
@@ -19,8 +19,10 @@ $result_row = mysqli_fetch_row($result_count);
 $total_row = $result_row[0];
 
 // 총 페이지 계산
-if ($total_row <= 0)
-  $total_row = 0;
+if ($total_row <= 0) {
+    $total_row = 0;
+}
+
 $total_page = floor(($total_row - 1) / $page_size);
 
 // 현재 페이지 계산
@@ -108,16 +110,45 @@ $current_page = floor($no / $page_size);
 </table>
 <table border=0>
 <tr>
-    <td width=600 height=20 align=center rowspan=4>
-    <font color=gray>
-    &nbsp;
+<td width=600 height=20 align=center rowspan=4>
+<font color=gray>
+&nbsp;
 <?php
+// 페이징 처리
+$start_page = (int)($current_page / $page_list_size) * $page_list_size;
+$end_page = $start_page + $page_list_size - 1;
 
+if ($total_page < $end_page) $end_page = $total_page;
+if ($start_page >= $page_list_size) {
+$prev_list = ($start_page - 1)* $page_size;
+echo "<a href=\"$PHP_SELF?no=$prev_list\">◀</a>\n";
+}
+
+for ($i=$start_page;$i <= $end_page;$i++) {
+  $page=$page_size*$i;
+  $page_num = $i+1;
+
+  if ($no!=$page){ //현재 페이지가 아닐 경우만 링크를 표시
+    echo "<a href=\"$PHP_SELF?no=$page\">";
+  }
+
+  echo " $page_num ";
+
+  if ($no!=$page){
+    echo "</a>";
+  }
+}
+
+if($total_page > $end_page) {
+$next_list = ($end_page + 1)* $page_size;
+echo "<a href=$PHP_SELF?no=$next_list>▶</a><p>";
+}
 ?>
 </font>
 </td>
 </tr>
 </table>
+<br>
 <a href=write.php>글쓰기</a>
 </center>
 </body>
