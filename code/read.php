@@ -65,7 +65,7 @@ $row = mysqli_fetch_array($result);
   </tr>
   </table>
 <?
-    } // end While
+} // end While
 mysqli_close($conn);
 ?>
 </center>

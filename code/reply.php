@@ -1,6 +1,5 @@
 <?php
 include "db_info.php";
-// $id = $_GET['id'];
 $query = "SELECT * FROM $board WHERE id = $_GET[id]";
 $parent_result = mysqli_query($conn, $query);
 $parent_row = mysqli_fetch_array($parent_result);

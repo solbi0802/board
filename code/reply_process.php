@@ -1,9 +1,9 @@
 <?php
 include "db_info.php";
 
-$prev_thread = floor($_POST[parent_thread]/1000)*1000 + 1000;
-$query = "UPDATE $board SET thread = thread +1
-          WHERE thread <$prev_thread and thread >$_POST[parent_thread]
+$prev_thread = ceil($_POST[parent_thread]/1000)*1000 - 1000;
+$query = "UPDATE $board SET thread = thread -1
+          WHERE thread >$prev_thread and thread <$_POST[parent_thread]
           ORDER BY thread";
 
 $update = mysqli_query($conn, $query);
@@ -14,7 +14,7 @@ $content = $_POST['content'];
 
 $query = "INSERT INTO $board (thread, depth, writer, pwd,
                              title,views, wdate, content)
-          VALUES(($_POST[parent_thread]+1),($parent_depth+1),
+          VALUES(($_POST[parent_thread]-1),($parent_depth+1),
           '$writer', '$pwd','$title',0, NOW(),'$content')";
 
 $result= mysqli_query($conn, $query);
