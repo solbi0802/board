@@ -9,12 +9,17 @@ $page_list_size = 10;
 $no = $_GET[no];
 if (!$no || $no < 0)
   $no = 0;
+if ($_GET[search_word] !="") {
+  $search = " WHERE $_GET[field] like '%".$_GET[search_word]."%'";
+}
 
-$query = "SELECT * FROM $board ORDER BY thread DESC LIMIT $no, $page_size";
-$result = mysqli_query($conn, $query);
+$query = "SELECT * FROM $board";
+$query .= $search;
+$query .= " ORDER BY thread DESC LIMIT $no, $page_size";
+$result =  mysqli_query($conn, $query);
 
 // 총 게시물 수
-$result_count = mysqli_query($conn, "SELECT count(*) FROM $board");
+$result_count = mysqli_query($conn, "SELECT count(*) FROM $board ".$search);
 $result_row = mysqli_fetch_row($result_count);
 $total_row = $result_row[0];
 
@@ -32,8 +37,6 @@ $current_page = floor($no / $page_size);
 <html>
 <head>
 <title>답변형 게시판</title>
-<style>
-</style>
 </head>
 <body topmargin=0 leftmargin=0 text=#464646>
 <center>
@@ -67,7 +70,7 @@ $current_page = floor($no / $page_size);
 <tr>
     <!-- 번호 -->
     <td height=20 bgcolor=white align=center>
-      <a href="read.php?id=<?=$row[id]?>&no=<?=$no?>">
+      <a href=read.php?id=<?=$row[id]?>&no=<?=$no?>&field=<?=$_GET[field]?>&search_word=<?=$_GET[search_word]?>>
         <?=$row[id]?></a>
     </td>
     <!-- 번호 끝 -->
@@ -77,7 +80,7 @@ $current_page = floor($no / $page_size);
         if ($row[depth] >0)
             echo "<img height=1 width=" . $row[depth]*7 . ">└";
         ?>
-        <a href="read.php?id=<?=$row[id]?>&no=<?=$no?>">
+        <a href=read.php?id=<?=$row[id]?>&no=<?=$no?>&field=<?=$_GET[field]?>&search_word=<?=$_GET[search_word]?>>
         <?=strip_tags($row[title]);?></a>
     </td>
     <!-- 제목 끝 -->
@@ -119,9 +122,10 @@ $start_page = (int)($current_page / $page_list_size) * $page_list_size;
 $end_page = $start_page + $page_list_size - 1;
 
 if ($total_page < $end_page) $end_page = $total_page;
+
 if ($start_page >= $page_list_size) {
 $prev_list = ($start_page - 1)* $page_size;
-echo "<a href=\"$PHP_SELF?no=$prev_list\">◀</a>\n";
+echo "<a href=\"$PHP_SELF?no=$prev_list&field=$_GET[field]&search_word=$_GET[search_word]\">◀</a>\n";
 }
 
 for ($i=$start_page;$i <= $end_page;$i++) {
@@ -129,7 +133,7 @@ for ($i=$start_page;$i <= $end_page;$i++) {
   $page_num = $i+1;
 
   if ($no!=$page){ //현재 페이지가 아닐 경우만 링크를 표시
-    echo "<a href=\"$PHP_SELF?no=$page\">";
+    echo "<a href=\"$PHP_SELF?no=$page&field=$_GET[field]&search_word=$_GET[search_word]\">";
   }
 
   echo " $page_num ";
@@ -141,7 +145,7 @@ for ($i=$start_page;$i <= $end_page;$i++) {
 
 if($total_page > $end_page) {
 $next_list = ($end_page + 1)* $page_size;
-echo "<a href=$PHP_SELF?no=$next_list>▶</a><p>";
+echo "<a href=$PHP_SELF?no=$next_list&field=$_GET[field]&search_word=$_GET[search_word]>▶</a><p>";
 }
 ?>
 </font>
@@ -150,6 +154,13 @@ echo "<a href=$PHP_SELF?no=$next_list>▶</a><p>";
 </table>
 <br>
 <a href=write.php>글쓰기</a>
+<br>
+<form name= search method=get action="<?=$PHP_SELF?>">
+<select name=field>
+<option value=title>제 목</option>
+<option value=content>내 용</option>
+<option value=writer>작 성 자</option>
+</select><input type=text name=search_word size=30><input type=submit value="검색">
 </center>
 </body>
 </html>
