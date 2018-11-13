@@ -7,7 +7,7 @@
 <body topmargin=0 leftmargin=0 text=#464646>
 <center>
 <BR>
-<form action=update.php?id=<?=$_GET[id]?> method=post>
+<form action=update.php?id=<?=$_GET['id']?> method=post>
 <table width=580 border=0 cellpadding=2 cellspacing=1 bgcolor=#4787c6>
 <tr>
     <td height=20 align=center bgcolor=#4787c6>
@@ -25,7 +25,7 @@
 <tr>
     <td width=60 align=left >작성자</td>
     <td align=left >
-        <INPUT type=text name=writer size=20 maxlength=10 value=<?=$row[writer]?>>
+        <INPUT type=text name=writer size=20 maxlength=10 value=<?=$row['writer']?>>
     </td>
 </tr>
 <tr></tr>
@@ -39,14 +39,14 @@
 <tr>
     <td width=60 align=left >제 목</td>
     <td align=left >
-        <INPUT type=text name=title size=60 maxlength=35 value=<?=$row[title]?>>
+        <INPUT type=text name=title size=60 maxlength=35 value=<?=$row['title']?>>
     </td>
 </tr>
 <tr></tr>
 <tr>
     <td width=60 align=left >내용</td>
     <td align=left >
-        <textarea name=content cols=65 rows=15><?=$row[content]?></textarea>
+        <textarea name=content cols=65 rows=15><?=$row['content']?></textarea>
     </td>
 </tr>
 <tr>

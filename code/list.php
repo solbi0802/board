@@ -1,21 +1,22 @@
 <?php
 include "db_info.php";
+
 // 한 페이지에 보여지는 게시물 수
 $page_size = 10;
-
 // 페이지 수
 $page_list_size = 10;
 
-$no = $_GET[no];
-if (!$no || $no < 0)
-  $no = 0;
-if ($_GET[search_word] !="") {
-  $search = " WHERE $_GET[field] like '%".$_GET[search_word]."%'";
+$no = isset($_GET['no']) ? $_GET['no'] : 0;
+$search_word = isset($_GET['search_word']) ? addslashes($_GET['search_word']) : '';
+$field = isset($_GET['field']) ? $_GET['field'] : '';
+
+if ($search_word) {
+    $search = " where $field like '%" . $search_word . "%' ";
+} else {
+  $search = "";
 }
 
-$query = "SELECT * FROM $board";
-$query .= $search;
-$query .= " ORDER BY thread DESC LIMIT $no, $page_size";
+$query = "SELECT * FROM $board".$search." ORDER BY thread DESC LIMIT $no, $page_size";
 $result =  mysqli_query($conn, $query);
 
 // 총 게시물 수
@@ -70,37 +71,37 @@ $current_page = floor($no / $page_size);
 <tr>
     <!-- 번호 -->
     <td height=20 bgcolor=white align=center>
-      <a href=read.php?id=<?=$row[id]?>&no=<?=$no?>&field=<?=$_GET[field]?>&search_word=<?=$_GET[search_word]?>>
-        <?=$row[id]?></a>
+      <a href=read.php?id=<?=$row['id']?>&no=<?=$no?>&field=<?=$field?>&search_word=<?=$search_word?>>
+        <?=$row['id']?></a>
     </td>
     <!-- 번호 끝 -->
     <!-- 제목 -->
     <td height=20 bgcolor=white>&nbsp;
         <?php
-        if ($row[depth] >0)
-            echo "<img height=1 width=" . $row[depth]*7 . ">└";
+        if ($row['depth'] >0)
+            echo "<img height=1 width=" . $row['depth']*7 . ">└";
         ?>
-        <a href=read.php?id=<?=$row[id]?>&no=<?=$no?>&field=<?=$_GET[field]?>&search_word=<?=$_GET[search_word]?>>
-        <?=strip_tags($row[title]);?></a>
+        <a href=read.php?id=<?=$row['id']?>&no=<?=$no?>&field=<?=$field?>&search_word=<?=$search_word?>>
+        <?=strip_tags($row['title']);?></a>
     </td>
     <!-- 제목 끝 -->
     <!-- 작성자 -->
     <td align=center height=20 bgcolor=white>
         <font color=black>
-          <?=$row[writer]?></a>
+          <?=$row['writer']?></a>
         </font>
     </td>
     <!-- 작성자 끝 -->
     <!-- 날짜 -->
     <td align=center height=20 bgcolor=white>
       <font color=black>
-        <?=$row[wdate]?>
+        <?=$row['wdate']?>
       </font>
     </td>
     <!-- 날짜 끝 -->
     <!-- 조회수 -->
     <td align=center height=20 bgcolor=white>
-      <font color=black><?=$row[views]?></font>
+      <font color=black><?=$row['views']?></font>
     </td>
 <!-- 조회수 끝 -->
 </tr>
@@ -125,15 +126,15 @@ if ($total_page < $end_page) $end_page = $total_page;
 
 if ($start_page >= $page_list_size) {
 $prev_list = ($start_page - 1)* $page_size;
-echo "<a href=\"$PHP_SELF?no=$prev_list&field=$_GET[field]&search_word=$_GET[search_word]\">◀</a>\n";
+echo "<a href=\"?no=$prev_list&field=$field&search_word=$search_word\">◀</a>\n";
 }
 
 for ($i=$start_page;$i <= $end_page;$i++) {
   $page=$page_size*$i;
   $page_num = $i+1;
 
-  if ($no!=$page){ //현재 페이지가 아닐 경우만 링크를 표시
-    echo "<a href=\"$PHP_SELF?no=$page&field=$_GET[field]&search_word=$_GET[search_word]\">";
+  if ($no != $page){ //현재 페이지가 아닐 경우만 링크를 표시
+    echo "<a href=\"?no=$page&field=$field&search_word=$search_word\">";
   }
 
   echo " $page_num ";
@@ -145,7 +146,7 @@ for ($i=$start_page;$i <= $end_page;$i++) {
 
 if($total_page > $end_page) {
 $next_list = ($end_page + 1)* $page_size;
-echo "<a href=$PHP_SELF?no=$next_list&field=$_GET[field]&search_word=$_GET[search_word]>▶</a><p>";
+echo "<a href=?no=$next_list&field=$field&search_word=$search_word>▶</a><p>";
 }
 ?>
 </font>
@@ -155,7 +156,7 @@ echo "<a href=$PHP_SELF?no=$next_list&field=$_GET[field]&search_word=$_GET[searc
 <br>
 <a href=write.php>글쓰기</a>
 <br>
-<form name= search method=get action="<?=$PHP_SELF?>">
+<form name= search action="<?php echo $_SERVER['PHP_SELF']; ?>" method="get">
 <select name=field>
 <option value=title>제 목</option>
 <option value=content>내 용</option>

@@ -3,8 +3,8 @@ include "db_info.php";
 $query = "SELECT * FROM $board WHERE id = $_GET[id]";
 $parent_result = mysqli_query($conn, $query);
 $parent_row = mysqli_fetch_array($parent_result);
-$parent_title = "└".$parent_row[title];
-$parent_content = "\n>".str_replace("\n", "\n>", $parent_row[content]);
+$parent_title = "└".$parent_row['title'];
+$parent_content = "\n>".str_replace("\n", "\n>", $parent_row['content']);
 ?>
 <html>
 <head>
@@ -16,8 +16,8 @@ $parent_content = "\n>".str_replace("\n", "\n>", $parent_row[content]);
 <center>
 <BR>
 <form action=reply_process.php method=post>
-<input type=hidden name=parent_depth value=<?=$parent_row[depth]?>>
-<input type=hidden name=parent_thread value=<?=$parent_row[thread]?>>
+<input type=hidden name=parent_depth value=<?=$parent_row['depth']?>>
+<input type=hidden name=parent_thread value=<?=$parent_row['thread']?>>
 <table width=580 border=0 cellpadding=2 cellspacing=1 bgcolor=#4787c6>
 <tr>
   <td height=20 align=center bgcolor=#4787c6>

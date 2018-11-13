@@ -8,7 +8,7 @@ $writer = $_POST['writer'];
 $title = $_POST['title'];
 $content = $_POST['content'];
 
-if ($_POST[pwd] == $row[pwd]) {
+if ($_POST['pwd'] == $row['pwd']) {
   $query = "UPDATE $board SET writer = '$writer',title= '$title', content= '$content'
   WHERE id = $id";
   $result = mysqli_query($conn, $query);

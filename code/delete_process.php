@@ -5,7 +5,7 @@ $query = "SELECT pwd FROM $board WHERE id= $id";
 $result = mysqli_query($conn, $query);
 $row = mysqli_fetch_array($result);
 
-if ($_POST[pwd] == $row[pwd]) {
+if ($_POST['pwd'] == $row['pwd']) {
   $query = "DELETE FROM $board WHERE id= $id";
   $result = mysqli_query($conn, $query);
 } else {

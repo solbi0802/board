@@ -1,14 +1,14 @@
 <?php
 include "db_info.php";
 
-$no = $_GET[no];
-$id = $_GET[id];
+$no = isset($_GET['no']);
+$id = $_GET['id'];
 
 // 조회수 증가
-$query = "UPDATE $board SET views = views+1 WHERE id=$_GET[id]";
+$query = "UPDATE $board SET views = views+1 WHERE id=$id";
 $result = mysqli_query($conn, $query);
 
-$query = "SELECT * FROM $board WHERE id=$_GET[id]";
+$query = "SELECT * FROM $board WHERE id=$id";
 $result = mysqli_query($conn, $query);
 $row = mysqli_fetch_array($result);
 ?>
@@ -22,23 +22,23 @@ $row = mysqli_fetch_array($result);
   <table width=800 border=0 cellpadding=2 cellspacing=1 bgcolor=#4787c6>
   <tr>
       <td height=30 colspan=4 align=center bgcolor=#4787c6>
-          <font color=white><B><?=strip_tags($row[title]);?>
+          <font color=white><B><?=strip_tags($row['title']);?>
           </B></font>
       </td>
   </tr>
   <tr>
       <td width=80 height=40 align=center bgcolor=#EEEEEE>작성자</td>
-      <td width=240 bgcolor=white><?=$row[writer]?></td>
+      <td width=240 bgcolor=white><?=$row['writer']?></td>
       <td width=100 height=40 align=center bgcolor=#EEEEEE>
           날&nbsp;&nbsp;&nbsp;짜</td><td width=240 bgcolor=white>
-          <?=$row[wdate]?></td>
+          <?=$row['wdate']?></td>
           <td width=60 height=40 align=center bgcolor=#EEEEEE>조회수</td>
-          <td width=250 bgcolor=white><?=$row[views]?></td>
+          <td width=250 bgcolor=white><?=$row['views']?></td>
   </tr>
   <tr>
       <td bgcolor=white height=40 colspan=6 style="word-break:break-all;">
           <font color=black>
-          <pre><?=strip_tags($row[content]);?></pre>
+          <pre><?=strip_tags($row['content']);?></pre>
           </font>
       </td>
   </tr>

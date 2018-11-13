@@ -1,7 +1,7 @@
 <?php
 include "db_info.php";
 
-$prev_thread = ceil($_POST[parent_thread]/1000)*1000 - 1000;
+$prev_thread = ceil($_POST['parent_thread']/1000)*1000 - 1000;
 $query = "UPDATE $board SET thread = thread -1
           WHERE thread >$prev_thread and thread <$_POST[parent_thread]
           ORDER BY thread";
@@ -11,6 +11,7 @@ $pwd = $_POST['pwd'];
 $writer = $_POST['writer'];
 $title = $_POST['title'];
 $content = $_POST['content'];
+$parent_depth = $_POST['parent_depth'];
 
 $query = "INSERT INTO $board (thread, depth, writer, pwd,
                              title,views, wdate, content)
