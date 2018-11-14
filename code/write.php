@@ -29,7 +29,7 @@
 <tr>
     <td width=70 align=left >비밀번호</td>
     <td align=left >
-        <INPUT type=password name=pwd size=8 maxlength=8>
+        <input type=password name=pwd size=8 maxlength=8>
     </td>
 </tr>
 <tr></tr>

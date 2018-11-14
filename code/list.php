@@ -5,10 +5,11 @@ include "db_info.php";
 $page_size = 10;
 // 페이지 수
 $page_list_size = 10;
+$no = isset($_GET['no']) ? htmlspecialchars($_GET['no']) : 0;
+if (!$no || $no < 0) $no=0;
 
-$no = isset($_GET['no']) ? mysqli_real_escape_string($conn, $_GET['no']) : 0;
-$search_word = isset($_GET['search_word']) ? mysqli_real_escape_string($conn, $_GET['search_word']) : '';
-$field = isset($_GET['field']) ? mysqli_real_escape_string($conn, $_GET['field']) : '';
+$search_word = isset($_GET['search_word']) ? htmlspecialchars($_GET['search_word']) : '';
+$field = isset($_GET['field']) ? htmlspecialchars($_GET['field']) : '';
 
 if ($search_word) {
     $search = " where $field like '%" . $search_word . "%' ";
@@ -71,18 +72,18 @@ $current_page = floor($no / $page_size);
 <tr>
     <!-- 번호 -->
     <td height=20 bgcolor=white align=center>
-      <a href=read.php?id=<?=$row['id']?>&no=<?=$no?>&field=<?=$field?>&search_word=<?=$search_word?>>
-        <?=$row['id']?></a>
+      <a href=read.php?id=<?=htmlspecialchars($row['id'])?>&no=<?=$no?>&field=<?=$field?>&search_word=<?=$search_word?>>
+        <?=htmlspecialchars($row['id'])?></a>
     </td>
     <!-- 번호 끝 -->
     <!-- 제목 -->
     <td height=20 bgcolor=white>&nbsp;
         <?php
         if ($row['depth'] >0)
-            echo "<img height=1 width=" . $row['depth']*7 . ">└";
+            echo "<img height=1 width=" . htmlspecialchars($row['depth'])*7 . ">└";
         ?>
-        <a href=read.php?id=<?=$row['id']?>&no=<?=$no?>&field=<?=$field?>&search_word=<?=$search_word?>>
-        <?=strip_tags($row['title']);?></a>
+        <a href=read.php?id=<?=htmlspecialchars($row['id'])?>&no=<?=$no?>&field=<?=$field?>&search_word=<?=$search_word?>>
+        <?=strip_tags(htmlspecialchars($row['title']));?></a>
     </td>
     <!-- 제목 끝 -->
     <!-- 작성자 -->
@@ -126,7 +127,7 @@ if ($total_page < $end_page) $end_page = $total_page;
 
 if ($start_page >= $page_list_size) {
 $prev_list = ($start_page - 1)* $page_size;
-echo "<a href=\"?no=$prev_list&field=$field&search_word=$search_word\">◀</a>\n";
+echo "<a href=\"?no=htmlspecialchars($prev_list)&field=htmlspecialchars($field)&search_word=htmlspecialchars($search_word)\">◀</a>\n";
 }
 
 for ($i=$start_page;$i <= $end_page;$i++) {
@@ -134,7 +135,7 @@ for ($i=$start_page;$i <= $end_page;$i++) {
   $page_num = $i+1;
 
   if ($no != $page){ //현재 페이지가 아닐 경우만 링크를 표시
-    echo "<a href=\"?no=$page&field=$field&search_word=$search_word\">";
+    echo "<a href=\"?no=htmlspecialchars($page)&field=htmlspecialchars($field)&search_word=htmlspecialchars($search_word)\">";
   }
 
   echo " $page_num ";
@@ -146,7 +147,7 @@ for ($i=$start_page;$i <= $end_page;$i++) {
 
 if($total_page > $end_page) {
 $next_list = ($end_page + 1)* $page_size;
-echo "<a href=?no=$next_list&field=$field&search_word=$search_word>▶</a><p>";
+echo "<a href=?no=htmlspecialchars($next_list)&field=htmlspecialchars($field)&search_word=htmlspecialchars($search_word)>▶</a><p>";
 }
 ?>
 </font>
@@ -156,7 +157,7 @@ echo "<a href=?no=$next_list&field=$field&search_word=$search_word>▶</a><p>";
 <br>
 <a href=write.php>글쓰기</a>
 <br>
-<form name= search action="<?php echo $_SERVER['PHP_SELF']; ?>" method="get">
+<form name= search action="<?php echo htmlspecialchars($_SERVER['PHP_SELF'])?>" method="get">
 <select name=field>
 <option value=title>제 목</option>
 <option value=content>내 용</option>

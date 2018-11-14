@@ -2,7 +2,7 @@
 include "db_info.php";
 
 $no = isset($_GET['no']);
-$id = mysqli_real_escape_string($conn, $_GET['id']);
+$id = mysqli_real_escape_string($conn, htmlspecialchars($_GET['id']));
 
 // 조회수 증가
 $query = "UPDATE $board SET views = views+1 WHERE id=$id";
@@ -22,7 +22,7 @@ $row = mysqli_fetch_array($result);
   <table width=800 border=0 cellpadding=2 cellspacing=1 bgcolor=#4787c6>
   <tr>
       <td height=30 colspan=4 align=center bgcolor=#4787c6>
-          <font color=white><B><?=strip_tags($row['title']);?>
+          <font color=white><B><?=strip_tags(htmlspecialchars($row['title']));?>
           </B></font>
       </td>
   </tr>
@@ -38,7 +38,7 @@ $row = mysqli_fetch_array($result);
   <tr>
       <td bgcolor=white height=40 colspan=6 style="word-break:break-all;">
           <font color=black>
-          <pre><?=strip_tags($row['content']);?></pre>
+          <pre><?=strip_tags(htmlspecialchars($row['content']));?></pre>
           </font>
       </td>
   </tr>

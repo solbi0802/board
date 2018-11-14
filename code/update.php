@@ -1,14 +1,15 @@
 <?php
 include "db_info.php";
-$id =  mysqli_real_escape_string($conn, $_GET['id']);
+
+$id =  mysqli_real_escape_string($conn, htmlspecialchars($_GET['id']));
 $result = mysqli_query($conn, "SELECT pwd FROM $board WHERE id = $id");
 $row = mysqli_fetch_array($result);
-$pwd =  mysqli_real_escape_string($conn, $_POST['pwd']);
-$writer =  mysqli_real_escape_string($conn, $_POST['writer']);
-$title =  mysqli_real_escape_string($conn, $_POST['title']);
-$content =  mysqli_real_escape_string($conn, $_POST['content']);
+$pwd =  mysqli_real_escape_string($conn, htmlspecialchars($_POST['pwd']));
+$writer =  mysqli_real_escape_string($conn, htmlspecialchars($_POST['writer']));
+$title =  mysqli_real_escape_string($conn, htmlspecialchars($_POST['title']));
+$content =  mysqli_real_escape_string($conn, htmlspecialchars($_POST['content']));
 
-if ($_POST['pwd'] == $row['pwd']) {
+if ($pwd == $row['pwd']) {
   $query = "UPDATE $board SET writer = '$writer',title= '$title', content= '$content'
   WHERE id = $id";
   $result = mysqli_query($conn, $query);

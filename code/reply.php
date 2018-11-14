@@ -1,11 +1,11 @@
 <?php
 include "db_info.php";
-$id = mysqli_real_escape_string($conn, $_GET['id']);
+$id = mysqli_real_escape_string($conn, htmlspecialchars($_GET['id']));
 $query = "SELECT * FROM $board WHERE id = $id";
 $parent_result = mysqli_query($conn, $query);
 $parent_row = mysqli_fetch_array($parent_result);
-$parent_title = "└".$parent_row['title'];
-$parent_content = "\n>".str_replace("\n", "\n>", $parent_row['content']);
+$parent_title = "└".htmlspecialchars($parent_row['title']);
+$parent_content = "\n>".str_replace("\n", "\n>", htmlspecialchars($parent_row['content']));
 ?>
 <html>
 <head>
@@ -17,8 +17,8 @@ $parent_content = "\n>".str_replace("\n", "\n>", $parent_row['content']);
 <center>
 <BR>
 <form action=reply_process.php method=post>
-<input type=hidden name=parent_depth value=<?=$parent_row['depth']?>>
-<input type=hidden name=parent_thread value=<?=$parent_row['thread']?>>
+<input type=hidden name=parent_depth value=<?=htmlspecialchars($parent_row['depth'])?>>
+<input type=hidden name=parent_thread value=<?=htmlspecialchars($parent_row['thread'])?>>
 <table width=580 border=0 cellpadding=2 cellspacing=1 bgcolor=#4787c6>
 <tr>
   <td height=20 align=center bgcolor=#4787c6>
@@ -44,13 +44,13 @@ $parent_content = "\n>".str_replace("\n", "\n>", $parent_row['content']);
     <tr>
       <td width=60 align=left>제 목</td>
       <td align=left>
-          <input type=text name=title size=60 maxlength=35 value="<?=$parent_title?>">
+          <input type=text name=title size=60 maxlength=35 value="<?=htmlspecialchars($parent_title)?>">
       </td>
     </tr>
     <tr>
       <td width=60 align=left >내용</td>
       <td align=left >
-          <textarea name=content cols=65 rows=15><?=$parent_content?></textarea>
+          <textarea name=content cols=65 rows=15><?=htmlspecialchars($parent_content)?></textarea>
       </td>
     </tr>
     <tr>

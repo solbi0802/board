@@ -1,6 +1,7 @@
 <?php
 include "db_info.php";
-$id = mysqli_real_escape_string($conn, $_GET['id']);
+
+$id = mysqli_real_escape_string($conn, htmlspecialchars($_GET['id']));
 $query = "SELECT pwd FROM $board WHERE id= $id";
 $result = mysqli_query($conn, $query);
 $row = mysqli_fetch_array($result);
@@ -14,7 +15,7 @@ if ($_POST['pwd'] == $row['pwd']) {
   history.go(-1);
   </script>");
   exit;
-}
+  }
 ?>
 <center>
 <meta http-equiv='Refresh' content='3; URL=list.php'>
