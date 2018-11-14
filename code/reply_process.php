@@ -11,7 +11,7 @@ $update = mysqli_query($conn, $query);
 $pwd = mysqli_real_escape_string($conn, htmlspecialchars($_POST['pwd']));
 $writer = mysqli_real_escape_string($conn, htmlspecialchars($_POST['writer']));
 $title = mysqli_real_escape_string($conn, htmlspecialchars($_POST['title']));
-$content = mysqli_real_escape_string($conn, htmlspecialchars($_POST['content']));
+$content = mysqli_real_escape_string($conn, $_POST['content']);
 $parent_depth = mysqli_real_escape_string($conn, htmlspecialchars($_POST['parent_depth']));
 
 $query = "INSERT INTO $board (thread, depth, writer, pwd,

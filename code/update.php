@@ -23,4 +23,3 @@ if ($pwd == $row['pwd']) {
   mysqli_close($conn);
   echo ("<meta http-equiv='Refresh' content='3; URL=read.php?id=$_GET[id]'>");
   ?>
-<center>
