@@ -9,7 +9,10 @@ $writer =  mysqli_real_escape_string($conn, htmlspecialchars($_POST['writer']));
 $title =  mysqli_real_escape_string($conn, htmlspecialchars($_POST['title']));
 $content =  mysqli_real_escape_string($conn, htmlspecialchars($_POST['content']));
 
-if ($pwd == $row['pwd']) {
+$hash = $row['pwd'];
+
+// 비밀번호 복호화
+if (password_verify($pwd, $hash)) {
   $query = "UPDATE $board SET writer = '$writer',title= '$title', content= '$content'
   WHERE id = $id";
   $result = mysqli_query($conn, $query);

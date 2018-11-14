@@ -6,7 +6,10 @@ $query = "SELECT pwd FROM $board WHERE id= $id";
 $result = mysqli_query($conn, $query);
 $row = mysqli_fetch_array($result);
 
-if ($_POST['pwd'] == $row['pwd']) {
+$pwd = $_POST['pwd'];
+$hash = $row['pwd'];
+// 비밀번호 복호화
+if (password_verify($pwd, $hash)) {
   $query = "DELETE FROM $board WHERE id= $id";
   $result = mysqli_query($conn, $query);
   echo "<script>alert('해당 게시물이 삭제 되었습니다.');</script>";

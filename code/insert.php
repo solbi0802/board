@@ -14,11 +14,11 @@ $title  = mysqli_real_escape_string($conn, htmlspecialchars($_POST['title']));
 $content = mysqli_real_escape_string($conn, htmlspecialchars($_POST['content']));
 
 // 비밀번호 암호화 처리
-//$hash = password_hash($pwd, PASSWORD_DEFAULT);
+$hash = password_hash($pwd, PASSWORD_DEFAULT);
 
 // 데이터 삽입
 $query = "INSERT INTO $board (thread, depth, writer, pwd, title, views, wdate, content )
-          VALUES($max_thread, 0, '$writer', '$pwd',
+          VALUES($max_thread, 0, '$writer', '$hash',
           '$title', 0, NOW(), '$content')";
 
 $result = mysqli_query($conn, $query);
