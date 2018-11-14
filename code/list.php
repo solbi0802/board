@@ -6,9 +6,9 @@ $page_size = 10;
 // 페이지 수
 $page_list_size = 10;
 
-$no = isset($_GET['no']) ? $_GET['no'] : 0;
-$search_word = isset($_GET['search_word']) ? addslashes($_GET['search_word']) : '';
-$field = isset($_GET['field']) ? $_GET['field'] : '';
+$no = isset($_GET['no']) ? mysqli_real_escape_string($conn, $_GET['no']) : 0;
+$search_word = isset($_GET['search_word']) ? mysqli_real_escape_string($conn, $_GET['search_word']) : '';
+$field = isset($_GET['field']) ? mysqli_real_escape_string($conn, $_GET['field']) : '';
 
 if ($search_word) {
     $search = " where $field like '%" . $search_word . "%' ";

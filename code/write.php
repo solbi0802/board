@@ -36,7 +36,7 @@
 <tr>
     <td width=60 align=left >제 목</td>
     <td align=left >
-        <INPUT type=text name=title size=60 maxlength=35>
+        <input type=text name=title size=60 maxlength=35>
     </td>
 </tr>
 <tr></tr>
@@ -48,11 +48,11 @@
 </tr>
 <tr>
     <td colspan=10 align=center>
-        <INPUT type=submit value="글쓰기">
+        <input type=submit value="글쓰기">
         &nbsp;&nbsp;
-        <INPUT type=reset value="초기화">
+        <input type=reset value="초기화">
         &nbsp;&nbsp;
-        <INPUT type=button value="뒤로" onclick="history.back(-1)">
+        <input type=button value="뒤로" onclick="location.href='list.php'">
     </td>
 </tr>
 </TABLE>

@@ -2,7 +2,7 @@
 include "db_info.php";
 
 $no = isset($_GET['no']);
-$id = $_GET['id'];
+$id = mysqli_real_escape_string($conn, $_GET['id']);
 
 // 조회수 증가
 $query = "UPDATE $board SET views = views+1 WHERE id=$id";

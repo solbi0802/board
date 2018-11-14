@@ -1,6 +1,7 @@
 <?php
 include "db_info.php";
-$query = "SELECT * FROM $board WHERE id = $_GET[id]";
+$id = mysqli_real_escape_string($conn, $_GET['id']);
+$query = "SELECT * FROM $board WHERE id = $id";
 $parent_result = mysqli_query($conn, $query);
 $parent_row = mysqli_fetch_array($parent_result);
 $parent_title = "└".$parent_row['title'];

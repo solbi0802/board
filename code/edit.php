@@ -16,7 +16,8 @@
 </tr>
 <?php
   include "db_info.php";
-  $result = mysqli_query($conn, "SELECT * FROM $board WHERE id= $_GET[id]");
+  $id = $_GET['id'];
+  $result = mysqli_query($conn, "SELECT * FROM $board WHERE id= $id");
   $row = mysqli_fetch_array($result);
 ?>
 <tr>
@@ -55,7 +56,7 @@
         &nbsp;&nbsp;
         <INPUT type=reset value="초기화">
         &nbsp;&nbsp;
-        <INPUT type=button value="뒤로" onclick="history.back(-1)">
+        <INPUT type=button value="뒤로" onclick="location.href='list.php'">
     </td>
 </tr>
 </TABLE>
