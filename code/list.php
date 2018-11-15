@@ -6,6 +6,8 @@ $page_size = 10;
 // 페이지 수
 $page_list_size = 10;
 $no = isset($_GET['no']) ? $_GET['no'] : 0;
+if (!$no || $no < 0) $no=0;
+
 $search_word = isset($_GET['search_word']) ? $_GET['search_word'] : '';
 $field = isset($_GET['field']) ? $_GET['field'] : '';
 
