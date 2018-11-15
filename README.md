@@ -4,6 +4,5 @@
 - Server OS : Windows10
 - Language : PHP (version: 7.2.11)
 - WEB Server : Apache 2.4 
-- WAS Server : AWS
 - DB : MySQL 5.7.19 
 - Editor : Atom
